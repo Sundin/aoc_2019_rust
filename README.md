@@ -10,7 +10,7 @@ Add the following line to your `~/.bashrc` or `~/.zshrc`:
 
 Run project:
 
-    cargo run
+    cargo run <day>
 
 Run unit tests:
 
