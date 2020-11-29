@@ -3,17 +3,7 @@ use std::cmp;
 pub fn get_total_fuel(contents: &str) -> i32 {
     let mut fuel = 0;
     for line in contents.lines() {
-        let line: i32 = match line
-            .trim()
-            .parse() {
-                Ok(num) => num,
-                // _ = match all Err values (place for proper error handling)
-                Err(_) => {
-                    println!("Please type a number!");
-                    continue;
-                }
-            };
-        fuel = fuel + get_fuel_requirements(line);
+        fuel += get_fuel_requirements(to_number(line));
     }
     fuel
 }
@@ -21,19 +11,24 @@ pub fn get_total_fuel(contents: &str) -> i32 {
 pub fn get_total_fuel_recursive(contents: &str) -> i32 {
     let mut fuel = 0;
     for line in contents.lines() {
-        let line: i32 = match line
-            .trim()
-            .parse() {
-                Ok(num) => num,
-                // _ = match all Err values (place for proper error handling)
-                Err(_) => {
-                    println!("Please type a number!");
-                    continue;
-                }
-            };
-        fuel = fuel + get_fuel_requirements_recursive(line);
+        fuel += get_fuel_requirements_recursive(to_number(line));
     }
     fuel
+}
+
+fn to_number(line: &str) -> i32 {
+    let line: i32 = match line
+        .trim()
+        .parse() {
+            Ok(num) => num,
+            // _ = match all Err values (place for proper error handling)
+            Err(_) => {
+                // TODO: error handling
+                println!("Please type a number!");
+                0
+            }
+        };
+    line
 }
 
 fn get_fuel_requirements(mass: i32) -> i32 {
@@ -43,7 +38,7 @@ fn get_fuel_requirements(mass: i32) -> i32 {
 fn get_fuel_requirements_recursive(mass: i32) -> i32 {
     let mut fuel = get_fuel_requirements(mass);
     if fuel > 0 {
-        fuel = fuel + cmp::max(0, get_fuel_requirements_recursive(fuel));
+        fuel += cmp::max(0, get_fuel_requirements_recursive(fuel));
     }
     fuel
 }
