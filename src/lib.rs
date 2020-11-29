@@ -1,11 +1,8 @@
-use std::env;
 use std::error::Error;
 use std::fs;
 
 pub struct Config {
-    pub query: String,
     pub filename: String,
-    pub case_sensitive: bool,
 }
 
 impl Config {
@@ -14,15 +11,10 @@ impl Config {
             return Err("not enough arguments");
         }
 
-        let query = args[1].clone();
-        let filename = args[2].clone();
-
-        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+        let filename = args[1].clone();
 
         Ok(Config {
-            query,
             filename,
-            case_sensitive,
         })
     }
 }
@@ -56,8 +48,7 @@ fn get_total_fuel(contents: &str) -> i32 {
 }
 
 fn get_fuel_requirements(mass: i32) -> i32 {
-    let m2 = mass / 3;
-    m2 - 2
+    mass / 3 - 2
 }
 
 
