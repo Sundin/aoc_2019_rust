@@ -44,7 +44,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     let mut results = Vec::new();
 
     for line in contents.lines() {
@@ -56,7 +56,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     results
 }
 
-pub fn search_case_insensitive<'a>(
+fn search_case_insensitive<'a>(
     query: &str,
     contents: &'a str,
 ) -> Vec<&'a str> {
@@ -71,6 +71,11 @@ pub fn search_case_insensitive<'a>(
 
     results
 }
+
+fn get_fuel_requirements(mass: i32) -> i32 {
+    0
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -101,5 +106,10 @@ Trust me.";
             vec!["Rust:", "Trust me."],
             search_case_insensitive(query, contents)
         );
+    }
+
+    #[test]
+    fn fuel_requirements() {
+        assert_eq!(0, get_fuel_requirements(0));
     }
 }
