@@ -61,4 +61,9 @@ mod tests {
         assert_eq!(966, get_fuel_requirements_recursive(1969));
         assert_eq!(50346, get_fuel_requirements_recursive(100756));
     }
+
+    #[test]
+    fn string_to_number() {
+        assert_eq!(666, to_number("666"));
+    }
 }
