@@ -12,7 +12,8 @@ impl Config {
             return Err("not enough arguments");
         }
 
-        let filename = "input/day".to_owned() + &args[1].clone() + ".txt";
+        let day = args[1].clone();
+        let filename = format!("input/day{}.txt", day);
 
         Ok(Config {
             filename,
@@ -74,12 +75,11 @@ fn get_fuel_requirements(mass: i32) -> i32 {
 
 fn get_fuel_requirements_recursive(mass: i32) -> i32 {
     let mut fuel = get_fuel_requirements(mass);
-    if (fuel > 0) {
+    if fuel > 0 {
         fuel = fuel + cmp::max(0, get_fuel_requirements_recursive(fuel));
     }
     fuel
 }
-
 
 #[cfg(test)]
 mod tests {
