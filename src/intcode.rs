@@ -5,6 +5,22 @@ pub fn get_answer(contents: &str) -> i32 {
     output
 }
 
+pub fn try_inputs(contents: &str, desired_result: i32) {
+    for noun in 0..100 {
+        for verb in 0..100 {
+            let mut intcodes = contents.split(",").map(|x| to_number(x)).collect::<Vec<i32>>();
+            intcodes[1] = noun;
+            intcodes[2] = verb;
+            let output = get_output(&mut intcodes, 0);
+            if output == desired_result {
+                println!("Answer for day 2 part 2: {}", noun * 100 + verb);
+                return
+            }
+        }
+    }
+    println!("Not found...");
+}
+
 fn to_number(line: &str) -> i32 {
     let line: i32 = match line
         .trim()
@@ -21,8 +37,6 @@ fn to_number(line: &str) -> i32 {
 }
 
 fn get_output(intcodes: &mut Vec<i32>, pointer: usize) -> i32 {
-    println!("{:?} pointer {}", intcodes, pointer);
-
     let operation = intcodes[pointer];
 
     match operation {
@@ -30,23 +44,19 @@ fn get_output(intcodes: &mut Vec<i32>, pointer: usize) -> i32 {
             let parameter1 = intcodes[intcodes[pointer+1] as usize];
             let parameter2 = intcodes[intcodes[pointer+2] as usize];
             let destination = intcodes[pointer+3];
-            println!("{} + {} = {} => pos {}", parameter1, parameter2, parameter1+parameter2, destination);
             intcodes[destination as usize] = parameter1 + parameter2;
         },
         2 => {
             let parameter1 = intcodes[intcodes[pointer+1] as usize];
             let parameter2 = intcodes[intcodes[pointer+2] as usize];
             let destination = intcodes[pointer+3];
-            println!("{} * {} = {} => pos {}", parameter1, parameter2, parameter1*parameter2, destination);
             intcodes[destination as usize] = parameter1 * parameter2;
         },
         99 => {
-            println!("Finished!");
             return intcodes[0];
         },
         _ => println!("something else"),
     }
-    println!("{:?}", intcodes);
     get_output(intcodes, pointer+4)
 }
 

@@ -42,4 +42,6 @@ fn day1(contents: String) {
 fn day2(contents: String) {
     let output = intcode::get_answer(&contents);
     println!("Answer for day 2 part 1: {}", output);
+
+    intcode::try_inputs(&contents, 19690720);
 }
