@@ -67,17 +67,21 @@ mod tests {
 
     #[test]
     fn test_addition() {
-        assert_eq!(2, get_output(&mut [1,0,0,0,99], 0));
+        let mut v: Vec<i32> = vec![1,0,0,0,99];
+        assert_eq!(2, get_output(&mut v, 0));
     }
 
     #[test]
     fn test_multiplication() {
-        assert_eq!(2, get_output(&mut [2,3,0,3,99], 0));
-        assert_eq!(2, get_output(&mut [2,4,4,5,99,0], 0))
+        let mut v: Vec<i32> = vec![2,3,0,3,99];
+        assert_eq!(2, get_output(&mut v, 0));
+        let mut v: Vec<i32> = vec![2,4,4,5,99,0];
+        assert_eq!(2, get_output(&mut v, 0))
     }
 
     #[test]
     fn test_multiple_rounds() {
-        assert_eq!(30, get_output(&mut [1,1,1,4,99,5,6,0,99], 0));
+        let mut v: Vec<i32> = vec![1,1,1,4,99,5,6,0,99];
+        assert_eq!(30, get_output(&mut v, 0));
     }
 }
