@@ -1,10 +1,26 @@
 
 pub fn get_answer(contents: &str) -> i32 {
-    let output = get_output(&mut [1,0,0,0,99], 0);
+    let mut intcodes = contents.split(",").map(|x| to_number(x)).collect::<Vec<i32>>();
+    let output = get_output(&mut intcodes, 0);
     output
 }
 
-fn get_output(intcodes: &mut[i32], pointer: usize) -> i32 {
+fn to_number(line: &str) -> i32 {
+    let line: i32 = match line
+        .trim()
+        .parse() {
+            Ok(num) => num,
+            // _ = match all Err values (place for proper error handling)
+            Err(_) => {
+                // TODO: error handling
+                println!("Please type a number!");
+                0
+            }
+        };
+    line
+}
+
+fn get_output(intcodes: &mut Vec<i32>, pointer: usize) -> i32 {
     println!("{:?} pointer {}", intcodes, pointer);
 
     let operation = intcodes[pointer];
